@@ -2,10 +2,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { FormControl, FormLabel } from '@mui/material';
 import { useState } from 'react';
-import { TaskCreateDto } from '../../commom/types/entities';
+import { Task, TaskCreateDto } from '../../commom/types/entities';
 import { createTask } from '../../services/taskService';
 
-export default function CreateUpdateTaskForm() {
+export default function CreateUpdateTaskForm({ onTaskSubmitted, handleClose }: { onTaskSubmitted: (task: Task) => void, handleClose: () => void}) {
 
 const [title, setTitle] = useState("");
 const [description, setDescription] = useState("");
@@ -13,8 +13,10 @@ const [description, setDescription] = useState("");
 const [titleError, setTitleError] = useState(false);
 const [descriptionError, setDescriptionError] = useState(false);
 
-const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
+const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    let task: TaskCreateDto
 
     setTitleError(false)
     setDescriptionError(false)
@@ -28,17 +30,20 @@ const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
     }
 
     if(title && description) {
-        console.log("ok")
+        const task : TaskCreateDto = {
+            title : title,
+            description : description
+        }
+    
+        const createdTask = await createTask(task)
+
+        onTaskSubmitted(createdTask)
+
+        setTitle('');
+        setDescription('');
+
+        handleClose()
     }
-
-    const task : TaskCreateDto = {
-        title : title,
-        description : description
-    }
-
-    const response = createTask(task)
-
-    console.log(response)
   
 }
 
@@ -61,6 +66,8 @@ return (
             variant='outlined'
             type='text'
             sx={{margin: '10px'}}
+            multiline
+            rows={3}
             value={description}
             error={descriptionError}
         />

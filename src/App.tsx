@@ -83,6 +83,10 @@ function App() {
     setOpen(false);
   };
 
+  const handleTaskSubmitted = (newTask: Task) => {
+    setUncompletedTasks((prevTasks) => [...prevTasks, newTask]);
+  };
+
 
   return (
     <>  
@@ -98,7 +102,7 @@ function App() {
       >
         <Box sx={{...style, width: 200 }}>
           <h2 id="child-modal-title">Criar Nova Tarefa</h2>
-          <CreateUpdateTaskForm></CreateUpdateTaskForm>
+          <CreateUpdateTaskForm handleClose={handleClose} onTaskSubmitted={handleTaskSubmitted}></CreateUpdateTaskForm>
         </Box>
       </Modal>
       
