@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { FormControl, FormLabel } from '@mui/material';
+import { Box, FormControl, FormLabel } from '@mui/material';
 import { useState } from 'react';
 import { Task, TaskCreateDto } from '../../commom/types/entities';
 import { createTask } from '../../services/taskService';
@@ -49,6 +49,7 @@ const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
 
 return (
     <form onSubmit={handleSubmit}>
+      <Box sx={{display: 'flex', flexDirection: 'column'}}>
         <TextField
             label="Title"
             onChange={e => setTitle(e.target.value)}
@@ -71,8 +72,10 @@ return (
             value={description}
             error={descriptionError}
         />
+    </Box>
 
-        <Button variant="outlined" type="submit">Criar Task</Button>
+    <Button sx={{marginLeft: '38%'}} variant="outlined" type="submit">Criar Task</Button>
+
     </form>
 )
 }

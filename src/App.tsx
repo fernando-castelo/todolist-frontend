@@ -9,8 +9,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Task } from './commom/types/entities';
-import ListTasks from './components/ListCompletedTasks';
-import CreateUpdateTaskForm from './components/CreateUpdateTaskForm';
+import ListTasks from './components/ListTasks';
+import CreateUpdateTaskForm from './components/CreateTaskForm';
 
 function App() {
 
@@ -100,7 +100,7 @@ function App() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{...style, width: 200 }}>
+        <Box sx={{...style, width: '20%' }}>
           <h2 id="child-modal-title">Criar Nova Tarefa</h2>
           <CreateUpdateTaskForm handleClose={handleClose} onTaskSubmitted={handleTaskSubmitted}></CreateUpdateTaskForm>
         </Box>
