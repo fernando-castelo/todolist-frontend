@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Task, TaskCreateDto } from '../../commom/types/entities';
 import { createTask } from '../../services/taskService';
 
-export default function CreateUpdateTaskForm({ onTaskSubmitted, handleClose }: { onTaskSubmitted: (task: Task) => void, handleClose: () => void}) {
+export default function CreateTaskForm({ onTaskSubmitted, handleClose }: { onTaskSubmitted: (task: Task) => void, handleClose: () => void}) {
 
 const [title, setTitle] = useState("");
 const [description, setDescription] = useState("");
@@ -74,7 +74,9 @@ return (
         />
     </Box>
 
-    <Button sx={{marginLeft: '38%'}} variant="outlined" type="submit">Criar Task</Button>
+    <Button sx={{marginLeft: '38%'}} variant="outlined" type="submit">
+        Criar Task
+    </Button>
 
     </form>
 )

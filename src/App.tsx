@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Task } from './commom/types/entities';
 import ListTasks from './components/ListTasks';
-import CreateUpdateTaskForm from './components/CreateTaskForm';
+import CreateTaskForm from './components/CreateTaskForm';
 
 function App() {
 
@@ -102,7 +102,7 @@ function App() {
       >
         <Box sx={{...style, width: '20%' }}>
           <h2 id="child-modal-title">Criar Nova Tarefa</h2>
-          <CreateUpdateTaskForm handleClose={handleClose} onTaskSubmitted={handleTaskSubmitted}></CreateUpdateTaskForm>
+          <CreateTaskForm handleClose={handleClose} onTaskSubmitted={handleTaskSubmitted}></CreateTaskForm>
         </Box>
       </Modal>
       

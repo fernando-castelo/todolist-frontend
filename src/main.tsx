@@ -7,10 +7,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from './error-page.tsx';
-import Contact, {
-  loader as contactLoader
-} from './routes/editartask.tsx';
-import UpdateTask from './routes/editartask.tsx';
+import Task, {
+  loader as taskLoader
+} from './routes/editarTask.tsx';
+import UpdateTask from './routes/editarTask.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     path: "/tasks/:taskId",
     element: <UpdateTask />,
     errorElement: <ErrorPage />,
-    loader: contactLoader
+    loader: taskLoader
   }
 ]);
 

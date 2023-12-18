@@ -10,4 +10,10 @@ interface TaskCreateDto {
     description : string;
 }
 
-export type {Task, TaskCreateDto}
+interface TaskUpdateDto {
+    title: string;
+    description: string;
+    completed: boolean;
+}
+
+export type {Task, TaskCreateDto, TaskUpdateDto}
