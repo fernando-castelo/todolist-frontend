@@ -21,4 +21,21 @@ const createTask = async (createTaskDto: TaskCreateDto) : Promise<Task> => {
 
 }
 
-export {createTask}
+const getTaskById = async (taskId : String) : Promise<Task> => {
+    const response = await fetch(`${API_URL}${taskId}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+
+    if(response.ok) {
+        const responseData = await response.json();
+        console.log(responseData)
+        return responseData;
+    } else {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+}
+
+export {createTask, getTaskById}

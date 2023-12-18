@@ -11,6 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import './taskcard.css'
+import { Link } from "react-router-dom";
 
 const TaskCard = ({ task } : {task: Task}) => {
 
@@ -66,12 +67,14 @@ const TaskCard = ({ task } : {task: Task}) => {
                       component="nav"
                       aria-labelledby="actions-list"
                 >
+                <Link to={`tasks/${task.id}`}>
                     <ListItemButton>
                         <ListItemIcon>
                             <EditIcon/>
                         </ListItemIcon>
                         <ListItemText primary="Editar Tarefa"/>
                     </ListItemButton>
+                </Link>
                     <ListItemButton>
                         <ListItemIcon>
                             <DeleteIcon/>
