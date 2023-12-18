@@ -87,11 +87,15 @@ function App() {
     setUncompletedTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
+  const handleUpdateTasks = (tasks : Task[]) => {
+    setUncompletedTasks(tasks)
+  }
+
 
   return (
     <>  
     <Typography variant="h1">Tarefas: </Typography>
-    <ListTasks tasks={uncompletedTasks}></ListTasks>
+    <ListTasks tasks={uncompletedTasks} onListUpdated={handleUpdateTasks}></ListTasks>
     <AddCircleOutlineIcon onClick={handleOpen} sx={{fontSize: '64px', cursor:'pointer'}}></AddCircleOutlineIcon>
      
     <Modal
@@ -107,7 +111,7 @@ function App() {
       </Modal>
       
     <Typography variant="h1">Tarefas Concluidas: </Typography> 
-    <ListTasks tasks={completedTasks}></ListTasks>
+    <ListTasks tasks={completedTasks} onListUpdated={handleUpdateTasks}></ListTasks>
     </>
   )
 }

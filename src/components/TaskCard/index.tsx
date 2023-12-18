@@ -1,4 +1,4 @@
-import { Box, Card, CardActions, CardContent, Modal, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Modal, Typography } from "@mui/material";
 import { Task } from "../../commom/types/entities";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
@@ -11,18 +11,38 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import './taskcard.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { deleteTask } from "../../services/taskService";
 
-const TaskCard = ({ task } : {task: Task}) => {
+const TaskCard = ({ task, onTaskDeleted} : {task: Task, onTaskDeleted: (task: Task) => void}) => {
 
+    const navigate = useNavigate();
+    
     const [open, setOpen] = useState(false);
+    const [openModalDelete, setOpenModalDelete] = useState(false)
 
     const handleOpen = () => {
         setOpen(true);
       };
-      const handleClose = () => {
+
+    const handleClose = () => {
         setOpen(false);
       };
+
+    const handleOpenModalDelete = () => {
+        setOpenModalDelete(true)
+    }
+
+    const handleCloseModalDelete = () => {
+        setOpenModalDelete(false)
+    }
+
+    const handleTaskDelete = () => {
+        setOpen(false) 
+        setOpenModalDelete(false)
+        deleteTask(task.id)
+        onTaskDeleted(task)
+    }
 
       const style = {
         position: 'absolute' as 'absolute',
@@ -67,21 +87,39 @@ const TaskCard = ({ task } : {task: Task}) => {
                       component="nav"
                       aria-labelledby="actions-list"
                 >
-                <Link to={`tasks/${task.id}`}>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <EditIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary="Editar Tarefa"/>
-                    </ListItemButton>
-                </Link>
+                    <Link to={`tasks/${task.id}`}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <EditIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary="Editar Tarefa"/>
+                        </ListItemButton>
+                    </Link>
                     <ListItemButton>
                         <ListItemIcon>
                             <DeleteIcon/>
                         </ListItemIcon>
-                        <ListItemText primary="Deletar Tarefa"/>
-                    </ListItemButton>
-                    
+                        <ListItemText onClick={handleOpenModalDelete} primary="Deletar Tarefa"/>
+                    </ListItemButton>  
+
+                    <Modal
+                        open={openModalDelete}
+                        onClose={handleCloseModalDelete}
+                    >
+                        <Box sx={{...style, width: '20%'}}>
+                            <Typography sx={{textAlign: 'center'}}variant="h5">
+                                    Desejar deletar essa task?
+                            </Typography>
+                            <Box sx={{display: 'flex', marginLeft: '20%'}}>
+                                <Button sx={{margin: '5%'}} variant="outlined" onClick={handleTaskDelete}>
+                                    Sim
+                                </Button>
+                                <Button sx={{margin: '5%'}} variant="outlined" onClick={handleCloseModalDelete}>
+                                    Nao
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Modal>
                 </List>
              </Box>
             </Modal>

@@ -55,4 +55,16 @@ const updateTask = async (taskId : String, taskUpdateDto : TaskUpdateDto) : Prom
     
 }
 
-export {createTask, getTaskById, updateTask}
+const deleteTask = async (taskId : String) : Promise<Response> => {
+    const response = await fetch(`${API_URL}${taskId}`, {
+        method: 'DELETE',
+    })
+
+    if(response.ok) {
+        return response;
+    } else {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+}
+
+export {createTask, getTaskById, updateTask, deleteTask}
