@@ -9,9 +9,11 @@ export default function CreateTaskForm({ onTaskSubmitted, handleClose }: { onTas
 
 const [title, setTitle] = useState("");
 const [description, setDescription] = useState("");
+const [category, setCategory] = useState("");
 
 const [titleError, setTitleError] = useState(false);
 const [descriptionError, setDescriptionError] = useState(false);
+const [categoryError, setCategoryError] = useState(false);
 
 const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -20,6 +22,7 @@ const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
 
     setTitleError(false)
     setDescriptionError(false)
+    setCategoryError(false)
 
     if(title == '') {
         setTitleError(true)
@@ -29,10 +32,15 @@ const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
         setDescriptionError(true)
     }
 
-    if(title && description) {
+    if(category == '') {
+        setCategoryError(true)
+    }
+
+    if(title && description && category) {
         const task : TaskCreateDto = {
             title : title,
-            description : description
+            description : description,
+            category: category
         }
     
         const createdTask = await createTask(task)
@@ -41,6 +49,7 @@ const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
 
         setTitle('');
         setDescription('');
+        setCategory('')
 
         handleClose()
     }
@@ -71,6 +80,16 @@ return (
             rows={3}
             value={description}
             error={descriptionError}
+        />
+        <TextField
+            label="Category"
+            onChange={e => setCategory(e.target.value)}
+            required
+            variant='outlined'
+            type='text'
+            sx={{margin: '10px'}}
+            value={category}
+            error={categoryError}
         />
     </Box>
 

@@ -21,6 +21,7 @@ const TaskCard = ({ task, onTaskDeleted} : {task: Task, onTaskDeleted: (task: Ta
     const [open, setOpen] = useState(false);
     const [openModalDelete, setOpenModalDelete] = useState(false)
 
+
     const handleOpen = () => {
         setOpen(true);
       };
@@ -80,7 +81,7 @@ const TaskCard = ({ task, onTaskDeleted} : {task: Task, onTaskDeleted: (task: Ta
                    Descricao:  {task.description}
                 </Typography>
                 <Typography variant="h5">
-                   ID:  {task.id}
+                   Categoria:  {task.category}
                 </Typography>
                 <Divider/>
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}

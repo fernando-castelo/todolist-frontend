@@ -12,7 +12,7 @@ const ListTasks = ({ tasks, onListUpdated} :  {tasks: Task[], onListUpdated: (ta
 
         const newTasks = tasks.filter(removeValue);
 
-        onListUpdated(newTasks);
+          onListUpdated(newTasks);
     }
 
 

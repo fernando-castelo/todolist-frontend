@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Task, TaskUpdateDto } from "../commom/types/entities";
 import { getTaskById, updateTask } from "../services/taskService";
 import { Form, Link, useLoaderData, useNavigate} from "react-router-dom";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import Checkbox from '@mui/material/Checkbox';
+import Switch from '@mui/material/Switch';
+
 
 export async function loader({ params } : {params : any}) {
     const task = await getTaskById(params.taskId);
@@ -16,11 +19,14 @@ export default function UpdateTask() {
 
     const [title, setTitle] = useState(task.title);
     const [description, setDescription] = useState(task.description);
+    const [category, setCategory] = useState(task.category);
+    const [completed, setCompleted] = useState(task.completed);
 
     const [taskOriginal, setTaskOriginal] = useState(task)
 
     const [titleError, setTitleError] = useState(false);
     const [descriptionError, setDescriptionError] = useState(false);
+    const [categoryError, setCategoryError] = useState(false);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -36,11 +42,16 @@ export default function UpdateTask() {
             setDescriptionError(true)
         }
 
-        if(title && description) {
+        if(category == '') {
+            setCategoryError(true)
+        }
+
+        if(title && description && category) {
             const task : TaskUpdateDto = {
                 title : title,
                 description : description,
-                completed: taskOriginal.completed
+                completed: completed,
+                category: category
             }
         
             const createdTask = await updateTask(taskOriginal.id, task)
@@ -53,6 +64,13 @@ export default function UpdateTask() {
     const handleRestaurarPadrao = () => {
         setTitle(taskOriginal.title)
         setDescription(taskOriginal.description)
+        setCompleted(taskOriginal.completed)
+        setCategory(taskOriginal.category)
+    }
+
+    const handleCheckboxChange = () => {
+        setCompleted(!completed)
+        console.log(completed)
     }
 
     return (
@@ -82,6 +100,20 @@ export default function UpdateTask() {
                     value={description}
                     error={descriptionError}
                 />
+                <TextField
+                    label="Category"
+                    onChange={e => setCategory(e.target.value)}
+                    required
+                    variant='outlined'
+                    type='text'
+                    sx={{margin: '10px'}}
+                    value={category}
+                    error={categoryError}
+                />
+                <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                    <Typography variant="h5">Atividade Concluida</Typography>
+                    <Switch sx={{margin: '5px', marginLeft: '40%'}} checked={completed} onChange={handleCheckboxChange}/>
+                </Box>
              </Box>
             
             <Box sx={{display: 'flex'}}>
