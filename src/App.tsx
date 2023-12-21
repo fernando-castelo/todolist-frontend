@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Card, CardContent, Modal, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Task } from './commom/types/entities';
 import ListTasks from './components/ListTasks';
 import CreateTaskForm from './components/CreateTaskForm';
+import { getCompletedTasks, getUncompletedTasks } from './services/taskService';
 
 function App() {
 
-  const API_URL = 'http://localhost:8080/tasks';
-  
   const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
   const [uncompletedTasks, setUncompletedTasks] = useState<Task[]>([]);
   const [open, setOpen] = useState(false);
@@ -33,42 +27,21 @@ function App() {
     pb: 3,
   }
 
-  const handleGetCompletedTasks = () => {
-    const status = 'completed'
-  
-    fetch(`${API_URL}/?status=${status}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-      
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      setCompletedTasks(data)
-    }) 
-  
+  const handleGetCompletedTasks = async () => {
+    
+    const tasks = await getCompletedTasks()
+
+    setCompletedTasks(tasks)
+
   }
 
-  const handleGetUncompletedTasks = () => {
-    const status = 'uncompleted'
-  
-    fetch(`${API_URL}/?status=${status}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-      
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      setUncompletedTasks(data)
-    }) 
-  
+
+ const handleGetUncompletedTasks = async () => {
+    
+    const tasks = await getUncompletedTasks()
+
+    setUncompletedTasks(tasks)
+
   }
 
   useEffect(() => {

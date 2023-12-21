@@ -2,6 +2,39 @@ import { Task, TaskCreateDto, TaskUpdateDto } from "../commom/types/entities";
 
 const API_URL = 'http://localhost:8080/tasks/';
 
+const getCompletedTasks = async () : Promise<Task[]> => {
+    const status = 'completed'
+    
+    const response = await fetch(`${API_URL}?status=${status}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+    })
+
+    const data = await response.json();
+
+    return data;
+
+  }
+
+
+ const getUncompletedTasks = async () : Promise<Task[]> => {
+    const status = 'uncompleted'
+    
+    const response = await fetch(`${API_URL}?status=${status}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+    })
+
+    const data = await response.json();
+
+    return data;
+
+  }
+
 const createTask = async (createTaskDto: TaskCreateDto) : Promise<Task> => {
     const response = await fetch(API_URL, {
         method: 'POST',
@@ -67,4 +100,4 @@ const deleteTask = async (taskId : String) : Promise<Response> => {
     }
 }
 
-export {createTask, getTaskById, updateTask, deleteTask}
+export {getCompletedTasks, getUncompletedTasks, createTask, getTaskById, updateTask, deleteTask}

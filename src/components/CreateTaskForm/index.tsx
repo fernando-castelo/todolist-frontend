@@ -18,8 +18,6 @@ const [categoryError, setCategoryError] = useState(false);
 const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    let task: TaskCreateDto
-
     setTitleError(false)
     setDescriptionError(false)
     setCategoryError(false)
