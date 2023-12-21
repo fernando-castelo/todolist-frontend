@@ -60,8 +60,9 @@ function App() {
     setUncompletedTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
-  const handleUpdateTasks = (tasks : Task[]) => {
-    setUncompletedTasks(tasks)
+  const handleUpdateTasks = (taskStatus : boolean, tasks : Task[]) => {
+
+    taskStatus ? setCompletedTasks(tasks) : setUncompletedTasks(tasks)
   }
 
 

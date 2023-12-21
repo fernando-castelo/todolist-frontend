@@ -4,7 +4,7 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import TaskCard from "../TaskCard";
 
 
-const ListTasks = ({ tasks, onListUpdated} :  {tasks: Task[], onListUpdated: (tasks : Task[]) => void} ) => {
+const ListTasks = ({ tasks, onListUpdated} :  {tasks: Task[], onListUpdated: (status: boolean, tasks : Task[]) => void} ) => {
 
     const handleTaskDeleted = (task : Task) => {
 
@@ -12,7 +12,9 @@ const ListTasks = ({ tasks, onListUpdated} :  {tasks: Task[], onListUpdated: (ta
 
         const newTasks = tasks.filter(removeValue);
 
-          onListUpdated(newTasks);
+        const status = task.completed
+
+        onListUpdated(status, newTasks);
     }
 
 
